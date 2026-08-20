@@ -1,7 +1,8 @@
 /**
  * FL VSL Fake-Seekbar Player
  * Zero deps. Modes: video | audio (+ 9:16 poster + waveform UX).
- * Seekbar display-only (hinge curve). Speed: 1x → 1.5x → 2x → 1x.
+ * Seekbar display-only (hinge curve). Speed: 1x → 1.25x → 1.5x → 2x → 1x.
+ * Optional data-rate (e.g. 1.25) sets the initial speed; hub omits it → 1x.
  * Start: manual | attempt | click-to-listen (muted teaser → Clique para ouvir).
  *
  * Volume note: browsers cannot read OS/device volume (Spotify/WhatsApp are native).
@@ -10,7 +11,7 @@
 (function (global) {
   'use strict';
 
-  var RATES = [1, 1.5, 2];
+  var RATES = [1, 1.25, 1.5, 2];
   var WAVE_BARS = 20;
   var DEFAULT_MIN_VOLUME = 0.4;
   var DEFAULT_ENGAGE_VOLUME = 1;
@@ -58,9 +59,26 @@
 
   function formatRate(rate) {
     if (rate === 1) return '1x';
+    if (rate === 1.25) return '1.25x';
     if (rate === 1.5) return '1.5x';
     if (rate === 2) return '2x';
     return rate + 'x';
+  }
+
+  function nearestRateIndex(rate) {
+    var idx = RATES.indexOf(rate);
+    if (idx !== -1) return idx;
+    var best = 0;
+    var bestDist = Math.abs(RATES[0] - rate);
+    var i;
+    for (i = 1; i < RATES.length; i++) {
+      var d = Math.abs(RATES[i] - rate);
+      if (d < bestDist) {
+        bestDist = d;
+        best = i;
+      }
+    }
+    return best;
   }
 
   function emit(root, name, detail) {
@@ -168,7 +186,8 @@
       minVolume: clamp01(parseFloatAttr(root, 'data-min-volume', DEFAULT_MIN_VOLUME)),
       engageVolume: clamp01(parseFloatAttr(root, 'data-engage-volume', DEFAULT_ENGAGE_VOLUME)),
       aspect: root.getAttribute('data-aspect') || '',
-      accent: root.getAttribute('data-accent') || ''
+      accent: root.getAttribute('data-accent') || '',
+      rate: parseFloatAttr(root, 'data-rate', 1)
     };
   }
 
@@ -178,6 +197,7 @@
     this.media = null;
     this.teaser = null;
     this.rateIndex = 0;
+    this._rateTouched = false;
     this.started = false;
     this.engaged = false;
     this._destroyed = false;
@@ -229,12 +249,15 @@
     if (!cfg.poster && this.els.poster) this.els.poster.style.display = 'none';
     if (!cfg.volumeNudge && this.els.gateHint) this.els.gateHint.hidden = true;
 
+    var self = this;
     this.media.addEventListener('timeupdate', this._onTime);
     this.media.addEventListener('play', this._onPlay);
     this.media.addEventListener('pause', this._onPause);
     this.media.addEventListener('ended', this._onEnded);
+    this.media.addEventListener('loadedmetadata', function () {
+      if (!self._rateTouched) self.setRate(self.cfg.rate, true);
+    });
 
-    var self = this;
     this.els.playBtn.addEventListener('click', function (e) {
       e.stopPropagation();
       if (!self.engaged) {
@@ -285,7 +308,7 @@
       }
     });
 
-    this.setRate(RATES[0], true);
+    this.setRate(cfg.rate, true);
     this.setVolume(cfg.engageVolume, true);
     this._applyStartMode();
   };
@@ -557,12 +580,7 @@
   };
 
   Player.prototype.setRate = function (rate, silent) {
-    var idx = RATES.indexOf(rate);
-    if (idx === -1) {
-      if (rate >= 2) idx = 2;
-      else if (rate >= 1.5) idx = 1;
-      else idx = 0;
-    }
+    var idx = nearestRateIndex(rate);
     this.rateIndex = idx;
     var r = RATES[idx];
     if (this.media) this.media.playbackRate = r;
@@ -571,6 +589,7 @@
   };
 
   Player.prototype.cycleRate = function () {
+    this._rateTouched = true;
     this.rateIndex = (this.rateIndex + 1) % RATES.length;
     this.setRate(RATES[this.rateIndex]);
   };
