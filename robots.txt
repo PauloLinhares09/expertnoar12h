@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /lp/
 
 Sitemap: https://www.expertnoar12h.com.br/sitemap.xml
