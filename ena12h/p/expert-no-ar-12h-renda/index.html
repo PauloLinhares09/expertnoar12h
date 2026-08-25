@@ -1712,11 +1712,6 @@
             <li>sem depender de o produto nascer perfeito;</li>
             <li>com suporte ilimitado por WhatsApp.</li>
           </ul>
-          <div class="cta-wrap">
-            <a class="btn js-checkout-ena12h" href="https://pay.hotmart.com/R106938053M?checkoutMode=10" data-cta="hero">Quero meu produto no ar por R$ 67</a>
-            <p class="urgency">Corre — esse preço de R$ 67 não vai durar muito tempo.</p>
-            <p class="micro">Pagamento único de R$ 67 · no checkout Hotmart: Pix ou cartão (parcelamento conforme disponibilidade) · 7 dias de garantia · A entrevista leva cerca de 15 min. As 12 horas de trabalho nosso começam depois da entrevista, dos acessos e do checklist de prontidão.</p>
-          </div>
         </div>
         <div class="hero-visual">
           <div class="hero-listen" id="heroListen">
@@ -1819,10 +1814,6 @@
             </ul>
           </div>
         </div>
-        <div class="cta-center">
-          <a class="btn js-checkout-ena12h" href="https://pay.hotmart.com/R106938053M?checkoutMode=10" data-cta="opportunity">Quero tirar meu produto da cabeça</a>
-          <p class="micro">Você não compra apenas conteúdo. Você contrata a criação padronizada do seu produto-base.</p>
-        </div>
       </div>
     </section>
 
@@ -1848,9 +1839,6 @@
             <h3>Seu produto vai para a Hotmart</h3>
             <p class="muted">Criamos capa, banner, organizamos a área de membros e publicamos o conteúdo. A propriedade do produto é sua — transferimos para a sua conta quando você quiser.</p>
           </article>
-        </div>
-        <div class="cta-center">
-          <a class="btn js-checkout-ena12h" href="https://pay.hotmart.com/R106938053M?checkoutMode=10" data-cta="mechanism">Começar agora por R$ 67</a>
         </div>
       </div>
     </section>
@@ -1924,10 +1912,6 @@
               <li>Revisões ilimitadas de conteúdo (além da rodada factual)</li>
             </ul>
           </div>
-        </div>
-
-        <div class="cta-center">
-          <a class="btn js-checkout-ena12h" href="https://pay.hotmart.com/R106938053M?checkoutMode=10" data-cta="deliverables">Sim, quero transformar meu conhecimento</a>
         </div>
       </div>
     </section>
@@ -2100,9 +2084,6 @@
         </div>
 
         <p class="hm-market__note">Exemplos do Marketplace Hotmart. Os links abrem a Hotmart — não são produtos nem depoimentos do Expert no Ar 12H.</p>
-        <div class="cta-center">
-          <a class="btn js-checkout-ena12h" href="https://pay.hotmart.com/R106938053M?checkoutMode=10" data-cta="marketplace">Quero meu produto no ar por R$ 67</a>
-        </div>
       </div>
     </section>
 
@@ -2188,9 +2169,6 @@
           </div>
         </div>
         <p class="proof-note">Produtos publicados por nós na Hotmart. Não são depoimentos de alunos.</p>
-        <div class="cta-center">
-          <a class="btn js-checkout-ena12h" href="https://pay.hotmart.com/R106938053M?checkoutMode=10" data-cta="proof-hotmart">Quero meu produto no ar por R$ 67</a>
-        </div>
       </div>
     </section>
 
@@ -2994,6 +2972,7 @@
     var sticky = document.getElementById('stickyCta');
     var oferta = document.getElementById('oferta');
     var faq = document.getElementById('faq');
+    var depo = document.getElementById('depoimentos-experts');
 
     function onScroll() {
       var y = window.scrollY || window.pageYOffset;
@@ -3012,7 +2991,9 @@
           var fr = faq.getBoundingClientRect();
           if (fr.top < viewH && fr.bottom > viewH - 100) hide = true;
         }
-        var show = y > 480 && !hide;
+        var afterDepo = false;
+        if (depo) afterDepo = depo.getBoundingClientRect().bottom <= 64;
+        var show = afterDepo && !hide;
         sticky.classList.toggle('is-visible', show);
         sticky.setAttribute('aria-hidden', show ? 'false' : 'true');
       }
