@@ -5,6 +5,7 @@ Runtime assets for the LP (deploy with `assets/`).
 | Arquivo | Uso |
 |---------|-----|
 | `vsl-ena12h-lt67-5min.mp3` | Áudio VSL FAB (~5:16) |
+| `vsl-ena12h-ativo-digital-5min-es.mp3` | VSL LP ES 12h (~5:48 @ 1x · Mateo) |
 | `vsl-ena12h-lt67-5min.elevenlabs.md` | Script ElevenLabs (seção C → regenerate) |
 | `aula-m01-01-bem-vindo.mp3` | Áudio aula 1.1 (~4:15) — fonte ElevenLabs |
 | `aula-m01-01-bem-vindo.mp4` | Player Hotmart: thumb estática 16:9 + áudio (~4:15) |

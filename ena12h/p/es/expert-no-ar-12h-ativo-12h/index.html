@@ -19,10 +19,10 @@
   Visual autoridade / esteira: ../../expert-no-ar-12h/assets/ena12h-hotmart-banner-16x9.jpg (#esteira-time)
   Depoimentos experts: ../../expert-no-ar-12h/assets/testimonials/ (#depoimentos-experts · 6c)
   Lottie: ../../expert-no-ar-12h/assets/lottie/{web-design,ecommerce,shop} — ver assets/lottie/README.md
-  VSL FAB (fixed BR): ../../expert-no-ar-12h/assets/voice/vsl-ena12h-ativo-digital-5min.mp3 (~5:51 @ 1x · default 1.25x ≈ 4:40) · Player: ../../expert-no-ar-12h/assets/player-vsl/
-  Poster estático: ../../expert-no-ar-12h/assets/ena12h-hotmart-cover-600.jpg · start-mode=attempt · sem teaser vídeo · data-rate=1.25
+  VSL FAB (ES nativo): ../../expert-no-ar-12h/assets/voice/vsl-ena12h-ativo-digital-5min-es.mp3 (~5:48 @ 1x) · Player: ../../expert-no-ar-12h/assets/player-vsl/
+  Poster estático: ../../expert-no-ar-12h/assets/ena12h-hotmart-cover-600.jpg · start-mode=attempt · sem teaser vídeo · data-rate=1.0
   Hero #heroListenBtn → mesmo FLVslPlayer do FAB (engage/play/pause; sem segundo áudio)
-  SSOT VSL: ./VSL_copy_ativo_digital_5min.md · ElevenLabs: ../../expert-no-ar-12h/assets/voice/vsl-ena12h-ativo-digital-5min.elevenlabs.md
+  SSOT VSL: lp-clones/latam/VSL_copy_latam_es_5min.md · ElevenLabs: assets/voice/vsl-ena12h-ativo-digital-5min-es.elevenlabs.md
 -->
 <!doctype html>
 <html lang="es">
@@ -1713,7 +1713,7 @@
           <div class="hero-listen" id="heroListen">
             <img class="hero-listen__cover" src="../../expert-no-ar-12h/assets/ena12h-hotmart-cover-600.jpg" alt="Portada Expert no Ar 12H" width="64" height="64" decoding="async">
             <div class="hero-listen__body">
-              <p class="hero-listen__kicker">Explicación en audio · ~5 min (portugués)</p>
+              <p class="hero-listen__kicker">Explicación en audio · ~6 min</p>
               <button type="button" class="btn btn--ghost" id="heroListenBtn" data-cta="hero-listen" aria-controls="vsl-player" aria-pressed="false">Escuchar la oferta</button>
             </div>
           </div>
@@ -2557,7 +2557,7 @@
   </div>
 
   <!-- VSL FAB — floating bottom-right; autoplay attempt; static poster only -->
-  <div class="vsl-fab" id="vsl-audio-wrap" data-asset="vsl-ena12h-ativo-digital-5min">
+  <div class="vsl-fab" id="vsl-audio-wrap" data-asset="vsl-ena12h-ativo-digital-5min-es">
     <p class="vsl-player-label">
       <span>~5 min</span>
       <span class="vsl-player-status" id="vsl-audio-status" aria-live="polite">Reproduciendo</span>
@@ -2566,8 +2566,8 @@
       class="fl-vsl"
       id="vsl-player"
       data-mode="audio"
-      data-src="../../expert-no-ar-12h/assets/voice/vsl-ena12h-ativo-digital-5min.mp3"
-      data-rate="1.25"
+      data-src="../../expert-no-ar-12h/assets/voice/vsl-ena12h-ativo-digital-5min-es.mp3"
+      data-rate="1.0"
       data-poster="../../expert-no-ar-12h/assets/ena12h-hotmart-cover-600.jpg"
       data-aspect="1 / 1"
       data-start-mode="attempt"
@@ -2591,8 +2591,8 @@
     var scroll90 = false;
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var ENA12H_PAGE_CFG = {
-      vslAudioUrl: '../../expert-no-ar-12h/assets/voice/vsl-ena12h-ativo-digital-5min.mp3',
-      vslPlaybackRate: 1.25,
+      vslAudioUrl: '../../expert-no-ar-12h/assets/voice/vsl-ena12h-ativo-digital-5min-es.mp3',
+      vslPlaybackRate: 1.0,
       vslPosterUrl: '../../expert-no-ar-12h/assets/ena12h-hotmart-cover-600.jpg',
       pageVariant: 'ativo-b-es'
     };
@@ -2716,7 +2716,7 @@
     }
 
     /* VSL FAB — floating BR; autoplay attempt; static poster (no teaser video).
-       MP3: ../../expert-no-ar-12h/assets/voice/vsl-ena12h-ativo-digital-5min.mp3 (~5:51 @ 1x · 1.25x default)
+       MP3: ../../expert-no-ar-12h/assets/voice/vsl-ena12h-ativo-digital-5min-es.mp3 (~5:48 @ 1x)
        Hero #heroListenBtn controls the SAME player (no second audio). */
     (function initVslPlayer() {
       var cfg = ENA12H_PAGE_CFG;
