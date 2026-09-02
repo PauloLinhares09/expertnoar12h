@@ -2,7 +2,7 @@
  * FL VSL Fake-Seekbar Player
  * Zero deps. Modes: video | audio (+ 9:16 poster + waveform UX).
  * Seekbar display-only (hinge curve). Speed: 1x → 1.25x → 1.5x → 2x → 1x.
- * Optional data-rate (e.g. 1.25) sets the initial speed; hub omits it → 1x.
+ * Optional data-rate (e.g. 1.25) sets the initial speed; omit → 1x. Hub LP uses 1.25.
  * Start: manual | attempt | click-to-listen (muted teaser → Clique para ouvir).
  *
  * Volume note: browsers cannot read OS/device volume (Spotify/WhatsApp are native).

@@ -17,8 +17,8 @@
   Visual autoridade / esteira: ./assets/ena12h-hotmart-banner-16x9.jpg (#esteira-time)
   Depoimentos experts: ./assets/testimonials/ (#depoimentos-experts · 6c)
   Lottie: ./assets/lottie/{web-design,ecommerce,shop} — ver assets/lottie/README.md
-  VSL FAB (fixed BR): ./assets/voice/vsl-ena12h-lt67-5min.mp3 (~5:16) · Player: ./assets/player-vsl/
-  Poster estático: ./assets/ena12h-hotmart-cover-600.jpg · start-mode=attempt · sem teaser vídeo
+  VSL FAB (fixed BR): ./assets/voice/vsl-ena12h-lt67-5min.mp3 (~5:16 @ 1x · default 1.25x ≈ 4:13) · Player: ./assets/player-vsl/
+  Poster estático: ./assets/ena12h-hotmart-cover-600.jpg · start-mode=attempt · sem teaser vídeo · data-rate=1.25
   Hero #heroListenBtn → mesmo FLVslPlayer do FAB (engage/play/pause; sem segundo áudio)
   SSOT VSL: ./copy/VSL_copy_ena12h_lt67_5min.md · ElevenLabs: ./assets/voice/vsl-ena12h-lt67-5min.elevenlabs.md
 -->
@@ -2542,6 +2542,7 @@
       id="vsl-player"
       data-mode="audio"
       data-src="./assets/voice/vsl-ena12h-lt67-5min.mp3"
+      data-rate="1.25"
       data-poster="./assets/ena12h-hotmart-cover-600.jpg"
       data-aspect="1 / 1"
       data-start-mode="attempt"
@@ -2566,7 +2567,8 @@
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var ENA12H_PAGE_CFG = {
       vslAudioUrl: './assets/voice/vsl-ena12h-lt67-5min.mp3',
-      vslPosterUrl: './assets/ena12h-hotmart-cover-600.jpg'
+      vslPosterUrl: './assets/ena12h-hotmart-cover-600.jpg',
+      vslPlaybackRate: 1.25
     };
 
     /* Hotmart-style rotating orange words */
@@ -2686,7 +2688,7 @@
     }
 
     /* VSL FAB — floating BR; autoplay attempt; static poster (no teaser video).
-       MP3: ./assets/voice/vsl-ena12h-lt67-5min.mp3 (~5:16)
+       MP3: ./assets/voice/vsl-ena12h-lt67-5min.mp3 (~5:16 @ 1x · 1.25x default)
        Hero #heroListenBtn controls the SAME player (no second audio). */
     (function initVslPlayer() {
       var cfg = ENA12H_PAGE_CFG;
@@ -2697,6 +2699,7 @@
       if (!root || typeof FLVslPlayer === 'undefined') return;
 
       if (cfg.vslAudioUrl) root.setAttribute('data-src', cfg.vslAudioUrl);
+      if (cfg.vslPlaybackRate) root.setAttribute('data-rate', String(cfg.vslPlaybackRate));
       if (cfg.vslPosterUrl) root.setAttribute('data-poster', cfg.vslPosterUrl);
       root.removeAttribute('data-teaser-src');
 
@@ -2746,6 +2749,18 @@
       }
 
       var player = FLVslPlayer.init(root);
+      if (player && cfg.vslPlaybackRate && player.media) {
+        function applyHubRate() {
+          if (player._rateTouched) return;
+          var rate = cfg.vslPlaybackRate;
+          if (typeof player.setRate === 'function') player.setRate(rate, true);
+          player.media.playbackRate = rate;
+          var btn = root.querySelector('[data-fl-vsl-rate]');
+          if (btn) btn.textContent = rate + 'x';
+        }
+        applyHubRate();
+        player.media.addEventListener('loadedmetadata', applyHubRate);
+      }
 
       if (heroBtn) {
         heroBtn.addEventListener('click', function () {
